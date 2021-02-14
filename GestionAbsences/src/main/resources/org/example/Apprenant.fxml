@@ -10,32 +10,27 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="595.0" prefWidth="728.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.ApprenantController">
     <children>
         <Button fx:id="btnBack" layoutX="622.0" layoutY="44.0" mnemonicParsing="false" onAction="#Logoutbtn" style="-fx-background-color: red;" text="Deconnecter" textFill="WHITE" />
-        <Label layoutX="185.0" layoutY="35.0" text="Bienvenue" textAlignment="CENTER" textFill="WHITE">
+        <Label layoutX="211.0" layoutY="35.0" text="Bienvenue" textAlignment="CENTER" textFill="WHITE">
             <font>
                 <Font size="29.0" />
             </font>
         </Label>
-        <Label fx:id="apprenant_nom" layoutX="373.0" layoutY="41.0" prefHeight="32.0" prefWidth="92.0" text="Label" textFill="#f5c012">
+        <Label fx:id="apprenant_nom" layoutX="373.0" layoutY="41.0" prefHeight="32.0" prefWidth="92.0" textFill="#f5c012">
             <font>
                 <Font size="22.0" />
             </font></Label>
-        <Label layoutX="295.0" layoutY="165.0" prefHeight="20.0" prefWidth="179.0" text="Votre Tableaux D'absence" textFill="#808080">
-            <font>
-                <Font name="System Bold" size="14.0" />
-            </font>
-        </Label>
         <Label fx:id="nbrAbsence" layoutX="539.0" layoutY="143.0" prefHeight="32.0" prefWidth="38.0">
             <font>
                 <Font size="22.0" />
             </font></Label>
-        <TableView fx:id="TableAffiche" layoutX="224.0" layoutY="233.0" prefHeight="261.0" prefWidth="333.0">
+        <TableView fx:id="TableAffiche" layoutX="170.0" layoutY="248.0" prefHeight="261.0" prefWidth="432.0">
             <columns>
 
-                <TableColumn fx:id="colabsence" prefWidth="109.0" text="ABSENCE" />
-                <TableColumn fx:id="coljust" prefWidth="108.0" text="JUSTIFICATION" />
-                <TableColumn fx:id="coldateAbsence" prefWidth="118.0" text="DATE D'ABSENCE" />
+                <TableColumn fx:id="colabsence" prefWidth="122.0" text="ABSENCE" />
+                <TableColumn fx:id="coljust" prefWidth="176.0" text="JUSTIFICATION" />
+                <TableColumn fx:id="coldateAbsence" prefWidth="132.0" text="DATE D'ABSENCE" />
             </columns>
         </TableView>
-      <Button fx:id="affichages" layoutX="359.0" layoutY="194.0" mnemonicParsing="false" onAction="#affichagest" text="affiche" />
+      <Button fx:id="affichages" layoutX="344.0" layoutY="143.0" mnemonicParsing="false" onAction="#affichagest" prefHeight="25.0" prefWidth="84.0" style="-fx-background-color: blue;" text="affiche" textFill="WHITE" />
     </children>
 </AnchorPane>
