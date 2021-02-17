@@ -1,4 +1,9 @@
 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package org.example;
 
 import java.io.IOException;
@@ -12,13 +17,16 @@ import java.util.ResourceBundle;
 
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
 import org.example.DAO.UserDaoImp;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.DAO.FormateurDaoImp;
 import org.example.Model.Absence;
+import org.example.Model.Apprenant;
 import org.example.Model.Users;
 
 /**
@@ -62,7 +70,9 @@ public class PrimaryController implements Initializable {
     public Button btnBack;
 
     List<Users> listAppr;
+    List<Apprenant> listApprenant;
     UserDaoImp user = new UserDaoImp();
+FormateurDaoImp apprenant = new FormateurDaoImp();
     /**
      * Initializes the controller class.
      */
@@ -71,13 +81,14 @@ public class PrimaryController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         dateNow.setValue(LocalDate.parse(rtnTodayDate()));
-        listAppr = null;
-        try {
-            listAppr = getAllAppr();
 
-            for(int i=0;i<listAppr.size();i++){
-                System.out.println("list " +listAppr.get(i).toString());
-                tfAppr.getItems().add(listAppr.get(i).getNom());
+        try {
+            ObservableList<Apprenant> listApprenant = getAllAppr();
+
+            for(int i=0;i<listApprenant.size();i++){
+                System.out.println("list " +listApprenant.get(i).toString());
+                 tfAppr.getItems().add(listApprenant.get(i).getNom());
+
             }
 
         } catch (SQLException throwables) {
@@ -92,7 +103,7 @@ public class PrimaryController implements Initializable {
         try {
             showAbsences();
             dateSysNow();
-            //getSelected();
+            getSelected();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -152,26 +163,33 @@ public class PrimaryController implements Initializable {
 
         tvAbsence.setItems(list);
     }
-    /* public void showUser() {
-
-         ObservableList<Users> list = user.getUsersList();
-         tvNom.setCellValueFactory(new PropertyValueFactory<Users, String>("nom"));
-         tvPrenom.setCellValueFactory(new PropertyValueFactory<Users, String>("prenom"));
-         tvEmail.setCellValueFactory(new PropertyValueFactory<Users, String>("email"));
-         tvTelephone.setCellValueFactory(new PropertyValueFactory<Users, String>("tele"));
-         tvDateNaissence.setCellValueFactory(new PropertyValueFactory<Users, String>("dateNaissance"));
-         tvRole.setCellValueFactory(new PropertyValueFactory<Users, String>("role"));
-         tvAdmin.setItems(list);
-     }*/
-    public List<Users> getAllAppr() throws SQLException, ClassNotFoundException {
-
-        List<Users> UserList = (List<Users>) user.getUsersList();
-        return UserList;
+    private void getSelected(){
+        tfAppr.setOnMouseClicked(mouseEvent -> {
+            String idApp = "";
 
 
+            int ID = tfAppr.getSelectionModel().getSelectedIndex();
+            if(ID <= -1) {
+                return;
+            }
+
+            idApp += colIdAppr.getCellData(ID);
+            Label lbl2 = new Label(idApp);
+
+
+
+            tfAppr.setValue(lbl2.getText());
+        });
     }
+   public ObservableList<Apprenant> getAllAppr() throws SQLException, ClassNotFoundException {
+
+       ObservableList<Apprenant> ApprenantList = (ObservableList<Apprenant>) apprenant.getAllAppr();
+       return ApprenantList;
+
+
+   }
     private void insertAb() throws Exception {
-        test.insertAbsence(new Absence(journeeSelected(), java.sql.Date.valueOf(dateNow.getValue()).toString(), tfJustification.getText(), tfAppr.getValue()));
+        test.insertAbsence(new Absence(journeeSelected(), java.sql.Date.valueOf(dateNow.getValue()).toString(), tfJustification.getText(), colIdAppr.getCellData(tfAppr.getSelectionModel().getSelectedIndex())));
         System.out.println("Insert successful");
         showAbsences();
     }
@@ -192,5 +210,7 @@ public class PrimaryController implements Initializable {
 
 
     public void handelButtonAction(ActionEvent actionEvent) {
+
     }
 }
+
